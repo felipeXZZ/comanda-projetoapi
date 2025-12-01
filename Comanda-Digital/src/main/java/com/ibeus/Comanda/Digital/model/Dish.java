@@ -17,7 +17,9 @@ public class Dish {
     private String description;
 
     private Double price;
-    
+
     // 1. CAMPO ADICIONADO (pode ser nulo)
-    private String imageUrl; 
+    private String imageUrl;
+
+    // Comentário de atualização para commit
 }

@@ -121,6 +121,8 @@ export class PedidoService {
           );
           this.pedidosState.next(pedidosAtualizados);
           
+          // COMMIT
+
           // Recarrega a lista completa do servidor para garantir sincronização
           // Isso garante que todos os componentes recebam a atualização
           this.loadAllPedidos(); 

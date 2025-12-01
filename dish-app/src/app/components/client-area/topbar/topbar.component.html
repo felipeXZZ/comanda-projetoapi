@@ -1,0 +1,36 @@
+<header class="bg-[#FF6347] max-w-6xl mx-auto px-4 rounded-lg mt-4">
+  <div class="py-3 flex items-center gap-3">
+    <span class="inline-flex items-center gap-2 text-sm text-white font-medium">
+      Bem-vindo! 🍽️
+    </span>
+
+    <nav class="ml-auto flex gap-2">
+      <a [routerLink]="['/cardapio']" [class.active]="isActive('/cardapio')"
+        class="px-4 py-2 rounded-md border border-white text-white font-medium transition hover:bg-[#e5533d]">
+        Cardápio
+      </a>
+    
+      <a [routerLink]="['/checkout']" [class.active]="isActive('/checkout')"
+        class="px-4 py-2 rounded-md border border-white text-white font-medium transition hover:bg-[#e5533d]">
+        Carrinho ({{ (totalItensNoCarrinho$ | async) || 0 }})
+      </a>
+    
+      <a [routerLink]="['/orders']" [class.active]="isActive('/orders')"
+        class="px-4 py-2 rounded-md border border-white text-white font-medium transition hover:bg-[#e5533d]">
+        Meus Pedidos
+      </a>
+    
+      <a [routerLink]="['/login']" [class.active]="isActive('/login')"
+        class="px-4 py-2 rounded-md border border-white text-white font-medium transition hover:bg-[#e5533d]">
+        Sair
+      </a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  a.active {
+    background-color: white;
+    color: black;
+  }
+</style>

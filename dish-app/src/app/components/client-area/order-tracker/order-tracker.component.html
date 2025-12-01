@@ -1,0 +1,51 @@
+<app-topbar></app-topbar>
+
+<main class="max-w-5xl mx-auto p-6">
+  <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">
+    Acompanhe seu Pedido
+  </h1>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="text-center text-gray-500 text-lg">
+    Carregando pedidos...
+  </div>
+
+  <!-- Erro -->
+  <div *ngIf="error" class="bg-red-100 text-red-700 p-4 rounded-lg text-center mb-6">
+    {{ error }}
+  </div>
+
+  <!-- Lista de Pedidos -->
+  <div *ngIf="!isLoading && pedidos.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let pedido of pedidos" class="bg-white rounded-2xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition">
+      <h2 class="text-xl font-semibold text-gray-800 mb-3">
+        Pedido #{{ pedido.id }}
+      </h2>
+
+      <div class="space-y-2 text-gray-700">
+        <p><strong>Cliente:</strong> {{ pedido.nomeCliente }}</p>
+        <p><strong>Telefone:</strong> {{ pedido.telefoneCliente }}</p>
+        <p><strong>Endereço:</strong> {{ pedido.enderecoCliente }}</p>
+        <p><strong>Total:</strong> {{ pedido.total | currency:'BRL' }}</p>
+      </div>
+
+      <div class="mt-4 border-t pt-3">
+        <strong class="text-gray-700">Status:</strong>
+        <span class="ml-2 font-bold"
+              [ngClass]="{
+                'text-blue-600': pedido.status === 'RECEBIDO',
+                'text-yellow-600': pedido.status === 'EM_PREPARO',
+                'text-green-600': pedido.status === 'PRONTO' || pedido.status === 'SAIU_PARA_ENTREGA' || pedido.status === 'ENTREGUE',
+                'text-red-600': pedido.status === 'CANCELADO'
+              }">
+          {{ formatarStatus(pedido.status) }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Caso não tenha pedidos -->
+  <div *ngIf="!isLoading && pedidos.length === 0" class="text-center text-gray-500 text-lg mt-10">
+    Nenhum pedido encontrado.
+  </div>
+</main>

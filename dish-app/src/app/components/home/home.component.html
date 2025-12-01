@@ -1,0 +1,117 @@
+<!--
+  Este HTML recria o seu Figma (image_86b55f.png) usando Tailwind CSS.
+  As imagens são placeholders; você pode trocá-las.
+-->
+
+<!-- 1. Cabeçalho (Header) -->
+<header class="bg-white shadow-md sticky top-0 z-50">
+  <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+    <div>
+      <a [routerLink]="['/']" class="text-3xl font-bold text-blue-600">iBeus Delivery</a>
+    </div>
+    <div class="flex items-center space-x-6">
+      <a [routerLink]="['/']" class="text-gray-700 hover:text-blue-600 font-medium">Início</a>
+      <a [routerLink]="['/cardapio']" class="text-gray-700 hover:text-blue-600 font-medium">Cardápio</a>
+      <a href="#sobre" class="text-gray-700 hover:text-blue-600 font-medium">Sobre</a>
+      <a href="#contato" class="text-gray-700 hover:text-blue-600 font-medium">Contato</a>
+      <a [routerLink]="['/admin']" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full transition duration-300">
+        Login
+      </a>
+    </div>
+  </nav>
+</header>
+
+<!-- 2. Seção Principal (Hero) -->
+<section class="bg-gray-50">
+  <div class="container mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <!-- Coluna de Texto -->
+    <div class="text-center md:text-left">
+      <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
+        O melhor <span class="text-blue-600">delivery</span> da região
+      </h1>
+      <p class="text-lg text-gray-600 mb-8">
+        Faça seu pedido online e receba na sua porta em minutos. Comida fresca, rápida e deliciosa.
+      </p>
+      <a [routerLink]="['/cardapio']" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 shadow-lg">
+        Ver Cardápio
+      </a>
+    </div>
+    <!-- Coluna de Imagem -->
+    <div class="flex justify-center">
+      <!-- Você pode trocar esta imagem -->
+      <img src="https://i.imgur.com/T3VL212.jpeg" alt="Hambúrguer delicioso" class="rounded-3xl shadow-2xl w-full max-w-md object-cover">
+    </div>
+  </div>
+</section>
+
+<!-- 3. Seção "Sobre Nós" -->
+<section id="sobre" class="bg-white">
+  <div class="container mx-auto px-6 py-24 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <!-- Coluna de Imagem -->
+    <div class="flex justify-center">
+      <!-- Você pode trocar esta imagem -->
+      <img src="https://placehold.co/600x400/E2E8F0/94A3B8?text=Nossa+Cozinha" alt="Nossa Cozinha" class="rounded-3xl shadow-xl w-full max-w-md object-cover">
+    </div>
+    <!-- Coluna de Texto -->
+    <div class="text-center md:text-left">
+      <h2 class="text-4xl font-bold text-gray-900 mb-6">Sobre Nós</h2>
+      <p class="text-gray-600 mb-4 leading-relaxed">
+        O iBeus Delivery nasceu da paixão por comida boa e da vontade de entregar a melhor experiência de delivery. Usamos apenas ingredientes frescos e selecionados, preparados na hora por chefs apaixonados.
+      </p>
+      <p class="text-gray-600 leading-relaxed">
+        Nossa missão é simples: levar felicidade até a sua casa, uma refeição de cada vez.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Seção "Cardápio" (Prévia) -->
+<section id="cardapio" class="bg-gray-50">
+  <div class="container mx-auto px-6 py-24">
+    <h2 class="text-4xl font-bold text-gray-900 mb-12 text-center">Nosso Cardápio</h2>
+
+    <!-- Carregando... -->
+    <div *ngIf="isLoading" class="text-center text-gray-600">Carregando pratos...</div>
+
+    <!-- Erro -->
+    <div *ngIf="error" class="text-center text-red-600">{{ error }}</div>
+
+    <!-- Grelha da Prévia do Cardápio (Baseado no Figma) -->
+    <div *ngIf="!isLoading && !error" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Loop *ngFor para cada 'dish' (prato) -->
+      <div *ngFor="let dish of dishesPreview" class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-2xl hover:-translate-y-1 flex">
+
+        <!-- Imagem (Esquerda) -->
+        <img class="h-40 w-40 object-cover"
+             [src]="dish.imageUrl ? dish.imageUrl : 'https://placehold.co/400x400/E2E8F0/94A3B8?text=Sem+Imagem'"
+             onerror="this.src='https://placehold.co/400x400/E2E8F0/94A3B8?text=Sem+Imagem'"
+             alt="{{ dish.name }}">
+
+        <!-- Conteúdo (Direita) -->
+        <div class="p-5 flex flex-col justify-center">
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ dish.name }}</h3>
+          <p class="text-gray-600 mb-3">{{ dish.description | slice:0:50 }}...</p>
+          <span class="text-xl font-bold text-green-600">{{ dish.price | currency:'BRL' }}</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Botão Ver Cardápio Completo -->
+    <div class="text-center mt-16">
+      <a [routerLink]="['/cardapio']" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 shadow-lg">
+        Ver cardápio completo
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Footer (Rodapé) -->
+<footer id="contato" class="bg-gray-800 text-gray-300">
+  <div class="container mx-auto px-6 py-12 text-center">
+    <h3 class="text-3xl font-bold text-white mb-4">iBeus Delivery</h3>
+    <p class="mb-6">Rua Fictícia, 123 - Centro | (XX) 99999-8888</p>
+    <p>&copy; 2025 iBeus Delivery. Todos os direitos reservados.</p>
+  </div>
+</footer>

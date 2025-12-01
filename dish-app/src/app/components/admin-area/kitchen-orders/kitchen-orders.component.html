@@ -1,0 +1,64 @@
+<app-topbar></app-topbar>
+
+<main class="max-w-6xl mx-auto px-4 pt-8 pb-24">
+  <section class="text-center mb-8">
+    <h1 class="text-3xl text-gray-900">Gestão da Cozinha</h1>
+    <p class="text-gray-500 mt-2">Pedidos em preparo e prontos para entrega</p>
+  </section>
+
+  <div *ngIf="isLoading" class="p-8 text-center text-gray-500">
+    Buscando pedidos...
+  </div>
+  <div *ngIf="error" class="p-8 m-4 bg-red-50 text-red-700 border border-red-200 rounded-lg text-center">
+    {{ error }}
+  </div>
+  <div *ngIf="!isLoading && !error && pedidosDaCozinha.length === 0" class="p-8 text-center text-gray-500 border-2 border-dashed rounded-lg">
+    Nenhum pedido na cozinha. Tudo pronto por aqui!
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <div *ngFor="let pedido of pedidosDaCozinha"
+         class="bg-white rounded-lg shadow-md border border-gray-200 flex flex-col">
+
+      <div class="p-4 border-b bg-gray-50 rounded-t-lg">
+        <h2 class="text-xl font-bold text-gray-800">Pedido #{{ pedido.id }}</h2>
+        <p class="text-sm text-gray-600">Cliente: {{ pedido.nomeCliente }}</p>
+      </div>
+
+      <div class="p-4 space-y-2 flex-grow">
+        <h3 class="font-semibold text-gray-700">Itens:</h3>
+        <ul class="list-disc list-inside text-gray-800">
+
+          <li *ngFor="let item of pedido.itens">
+            {{ item.quantidade }}x {{ item.dish.name }}
+          </li>
+
+        </ul>
+      </div>
+
+      <div class="p-4 bg-gray-50 border-t rounded-b-lg">
+
+        <button *ngIf="pedido.status === 'RECEBIDO'"
+                (click)="marcarEmPreparo(pedido)"
+                [disabled]="isUpdating === pedido.id"
+                class="w-full px-4 py-3 rounded-lg text-white font-semibold transition
+                       bg-blue-500 hover:bg-blue-600
+                       disabled:bg-gray-400 disabled:cursor-wait">
+          {{ isUpdating === pedido.id ? 'Aguarde...' : '▶️ Iniciar Preparo' }}
+        </button>
+
+        <button *ngIf="pedido.status === 'EM_PREPARO'"
+                (click)="marcarComoPronto(pedido)"
+                [disabled]="isUpdating === pedido.id"
+                class="w-full px-4 py-3 rounded-lg text-white font-semibold transition
+                       bg-yellow-500 hover:bg-yellow-600
+                       disabled:bg-gray-400 disabled:cursor-wait">
+          {{ isUpdating === pedido.id ? 'Atualizando...' : '👨‍🍳 Marcar como Pronto' }}
+        </button>
+
+        </div>
+    </div>
+
+  </div>
+</main>

@@ -1,0 +1,38 @@
+<header class="bg-yellow-400 max-w-7xl mx-auto px-4 rounded-lg mt-4">
+  <div class="py-3 flex items-center gap-3">
+    
+    <span class="inline-flex items-center gap-2 text-sm text-gray-800 font-medium">
+      Painel do Funcionário
+    </span>
+
+    <nav class="ml-auto flex gap-2">
+      <a [routerLink]="['/admin']" [class.active]="isActive('/admin/gestao-menu')"
+         class="px-4 py-2 rounded-md border border-gray-700 text-gray-800 font-medium transition hover:bg-yellow-300">
+        Gestão Menu
+      </a>
+      
+      <a [routerLink]="['/admin/kitchen']" [class.active]="isActive('/admin/cozinha')"
+         class="px-4 py-2 rounded-md border border-gray-700 text-gray-800 font-medium transition hover:bg-yellow-300">
+        Cozinha
+      </a>
+      
+      <a [routerLink]="['/admin/entregas']" [class.active]="isActive('/admin/entregas')"
+         class="px-4 py-2 rounded-md border border-gray-700 text-gray-800 font-medium transition hover:bg-yellow-300">
+        Entregas
+      </a>
+      
+      <a [routerLink]="['/login']" [class.active]="isActive('/login')"
+         class="px-4 py-2 rounded-md border border-gray-700 text-gray-800 font-medium transition hover:bg-yellow-300">
+        Sair
+      </a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  a.active {
+    background-color: white;
+    color: #1f2937;
+    border-color: white;
+  }
+</style>

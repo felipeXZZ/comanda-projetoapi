@@ -1,0 +1,129 @@
+<app-topbar></app-topbar>
+
+
+<!-- ======= CONTEÚDO ======= -->
+<main class="max-w-6xl mx-auto px-4 pt-8 pb-24">
+  <!-- Título central + subtítulo -->
+  <section class="text-center mb-8">
+    <h1 class="text-3xl text-gray-900">Cardápio</h1>
+    <p class="text-gray-500 mt-2">Escolha seus pratos favoritos</p>
+  </section>
+
+  <!-- Estados -->
+  <div *ngIf="isLoading" class="text-center py-20 text-gray-500">Carregando...</div>
+  <div *ngIf="error" class="max-w-xl mx-auto mb-6 px-4 py-3 rounded-lg bg-red-50 text-red-700 border border-red-200">
+    {{ error }}
+  </div>
+  <div *ngIf="!isLoading && !error && dishes.length === 0" class="text-center py-20">
+    <h2 class="text-2xl font-semibold text-gray-800">Cardápio vazio</h2>
+    <p class="text-gray-500">Ainda não há pratos cadastrados.</p>
+  </div>
+
+  <!-- GRID DE PRATOS -->
+  <div *ngIf="!isLoading && !error && dishes.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <article *ngFor="let dish of dishes"
+      class="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden hover:shadow-md transition">
+      <!-- Faixa amarela do card -->
+      <div class="h-40 bg-[#ffd316] flex items-center justify-center text-5xl">
+        🍽️
+      </div>
+
+      <!-- Corpo do card -->
+      <div class="p-5">
+        <h3 class="text-lg text-gray-900">{{ dish.name }}</h3>
+        <p class="text-sm text-gray-600 mt-1 mb-3">{{ dish.description }}</p>
+
+        <div class="text-[15px] font-semibold text-green-600 mb-4">
+          {{ dish.price | currency:'BRL' }}
+        </div>
+
+        <button (click)="abrirModal(dish)" class="w-full rounded-md bg-[#FF6347] text-white font-semibold hover:opacity-90 transition text py-3 ...">
+          Adicionar ao Carrinho
+        </button>
+      </div>
+    </article>
+
+  </div>
+</main>
+
+<ng-container *ngIf="isModalVisible && selectedDish">
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg shadow-xl overflow-hidden max-w-md w-full z-50">
+      <div class="bg-[#FF6347] text-white p-4 flex justify-between items-center">
+        <h3 class="text-lg font-semibold">Adicionar ao Carrinho</h3>
+        <button (click)="cancelarModal()" class="text-white text-2xl leading-none hover:opacity-75">
+          &times;
+        </button>
+      </div>
+
+      <div class="p-6 space-y-4">
+        <div>
+          <h4 class="text-xl font-bold text-gray-900">
+            {{ selectedDish.name }}
+          </h4>
+          <p class="text-gray-600 text-sm mt-1">
+            {{ selectedDish.description }}
+          </p>
+          <p class="text-2xl font-bold text-gray-900 mt-2">
+            {{ selectedDish.price | currency : 'BRL' }}
+          </p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Quantidade:</label>
+          <div class="flex items-center gap-2">
+            <button (click)="decrementQuantity()" type="button"
+              class="w-10 h-10 rounded-md border border-gray-300 bg-white text-gray-700 text-xl grid place-items-center select-none hover:bg-gray-50">
+              -
+            </button>
+
+            <span
+              class="inline-flex items-center justify-center min-w-[3rem] h-10 px-4 rounded-md bg-white border border-gray-300 text-gray-800 font-semibold select-none">
+              {{ modalQuantity }}
+            </span>
+
+            <button (click)="incrementQuantity()" type="button"
+              class="w-10 h-10 rounded-md border border-gray-300 bg-white text-gray-700 text-xl grid place-items-center select-none hover:bg-gray-50">
+              +
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-[#ffd316] p-4 text-center font-semibold text-gray-900 rounded-md text-lg">
+          {{ modalQuantity }}x {{ selectedDish.name }} =
+          {{ (selectedDish.price * modalQuantity) | currency : 'BRL' }}
+        </div>
+      </div>
+
+      <div class="p-4 bg-gray-50 grid grid-cols-2 gap-4">
+        <button (click)="cancelarModal()" type="button"
+          class="w-full px-4 py-3 rounded-md bg-white border border-gray-300 text-gray-800 font-semibold hover:bg-gray-100 transition">
+          Cancelar
+        </button>
+        <button (click)="confirmarAdicaoAoCarrinho()" type="button"
+          class="w-full px-4 py-3 rounded-md bg-[#FF6347] text-white font-semibold hover:opacity-90 transition">
+          Adicionar ao Carrinho
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<!-- ======= BARRA FIXA DE CHECKOUT ======= -->
+<ng-container *ngIf="(totalItensNoCarrinho$ | async) as totalItens">
+  <div *ngIf="totalItens > 0" class="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur border-t border-gray-200">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="text-gray-800">
+        <span class="font-semibold">{{ totalItens }} {{ totalItens === 1 ? 'item' : 'itens' }} no carrinho</span>
+        <span class="ml-3 text-gray-600">
+          {{ (totalPrecoCarrinho$ | async) | currency:'BRL' }}
+        </span>
+      </div>
+      <a [routerLink]="['/checkout']"
+        class="px-5 py-2.5 rounded-md bg-[#FF6347] text-white font-semibold hover:opacity-90 transition">
+        Finalizar Pedido
+      </a>
+    </div>
+  </div>
+</ng-container>

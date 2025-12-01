@@ -1,0 +1,26 @@
+<div class="splash-wrap">
+  <div class="splash-content">
+    <h1 class="title">Comanda Digital</h1>
+    <p class="subtitle">Selecione o modo de acesso</p>
+
+    <div class="cards">
+      <!-- Cliente -->
+      <button class="card" (click)="goToCliente()">
+        <span class="icon-badge icon-orange">
+          🍽️
+        </span>
+        <span class="card-title">Modo Cliente</span>
+        <span class="card-desc">Faça seu pedido e acompanhe o status</span>
+      </button>
+
+      <!-- Funcionário -->
+      <button class="card" (click)="goToFuncionario()">
+        <span class="icon-badge icon-yellow">
+        👨‍🍳
+        </span>
+        <span class="card-title">Modo Funcionário</span>
+        <span class="card-desc">Gerencie pedidos, cozinha e entregas</span>
+      </button>
+    </div>
+  </div>
+</div>

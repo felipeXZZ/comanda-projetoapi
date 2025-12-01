@@ -1,0 +1,19 @@
+:root{
+  --brand: #F96452;    /* coral da navbar/botoes */
+  --brand-600:#ef5b49;
+  --brand-700:#e14d3b;
+  --accent:#FFD36E;    /* amarelo dos cards */
+  --surface:#FFFFFF;
+  --muted:#F6F7F9;
+  --text:#1F2937;      /* gray-800 */
+  --ok:#68D391;        /* green-400 */
+  --info:#7CC3E6;      /* blue-300 */
+}
+
+.brand     { background-color: var(--brand); }
+.brand-600 { background-color: var(--brand-600); }
+.brand-700 { background-color: var(--brand-700); }
+.accent    { background-color: var(--accent); }
+.surface   { background-color: var(--surface); }
+.muted     { background-color: var(--muted); }
+.text-ink  { color: var(--text); }

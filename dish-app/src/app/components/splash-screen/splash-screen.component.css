@@ -1,0 +1,85 @@
+/* Área total (fundo claro como no Figma) */
+.splash-wrap {
+  min-height: 100vh;
+  background: #f7f8fb;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+
+/* Conteúdo central */
+.splash-content {
+  text-align: center;
+}
+
+/* Títulos */
+.title {
+  font: 800 2rem/1.1 "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: #0f172a; /* slate-900 */
+  margin-bottom: .75rem;
+}
+.subtitle {
+  color: #475569; /* slate-600 */
+  margin-bottom: 2.5rem;
+}
+
+/* Grid dos cartões */
+.cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 768px) {
+  .cards { grid-template-columns: repeat(2, minmax(0, 320px)); gap: 2rem; }
+}
+
+/* Cartões */
+.card {
+  background: #fff;
+  border: 3px solid #e5e7eb;       /* gray-200 */
+  border-radius: 1rem;              /* ~rounded-2xl */
+  padding: 2rem;
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: .5rem;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  width: 100%;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+  border-color: #d4d4d8;            /* zinc-300 */
+}
+
+/* Ícones circulares */
+.icon-badge {
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  margin-bottom: .25rem;
+}
+.icon-orange { background: #ff735c; } /* tom coral do Figma */
+.icon-yellow { background: #ffe15e; } /* amarelo do Figma */
+
+.icon-badge svg {
+  width: 36px;
+  height: 36px;
+  stroke: #111827;  /* gray-900 */
+  fill: none;
+  stroke-width: 1.6;
+}
+
+/* Tipografia dos cartões */
+.card-title {
+  font: 700 1.125rem/1.2 "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: #0f172a;
+}
+.card-desc {
+  font: 400 .9rem/1.3 "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: #6b7280; /* gray-500 */
+}

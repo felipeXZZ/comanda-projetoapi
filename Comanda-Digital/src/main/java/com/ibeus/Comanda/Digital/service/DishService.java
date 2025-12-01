@@ -43,5 +43,6 @@ public class DishService {
     public void delete(Long id) {
         Dish dish = findById(id);
         dishRepository.delete(dish);
+        // Comentário de atualização para commit
     }
 }

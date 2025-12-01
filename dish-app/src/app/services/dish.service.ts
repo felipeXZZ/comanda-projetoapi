@@ -10,6 +10,7 @@ export interface Dish {
   description: string;
   price: number;
   imageUrl?: string; // <-- 1. CAMPO ADICIONADO (opcional)
+  // COMMIT CAIO
 }
 
 @Injectable({

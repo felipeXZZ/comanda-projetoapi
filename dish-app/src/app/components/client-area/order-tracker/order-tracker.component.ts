@@ -6,6 +6,7 @@ import { PedidoService } from '../../../services/pedido.service';
 import type { PedidoCompleto } from '../../../services/pedido.service';
 
 // COMMIT
+// COMMIT CADU
 
 @Component({
   selector: 'app-order-tracker',

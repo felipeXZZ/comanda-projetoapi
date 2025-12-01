@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Importa a Topbar do Admin (como definido no seu TS)
+// COMMIT VINICIOS
 import { TopbarComponent } from '../topbarAdmin/topbarAdmin.component';
 
 // Importa o serviço e as interfaces corretas

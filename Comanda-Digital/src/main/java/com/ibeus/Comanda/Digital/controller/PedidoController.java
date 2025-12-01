@@ -104,6 +104,7 @@ public class PedidoController {
             System.err.println("Erro ao atualizar status do pedido " + id + ": " + e.getMessage());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            // Comentário de atualização para commit
         }
     }
 }

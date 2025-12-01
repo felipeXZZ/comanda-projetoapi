@@ -5,6 +5,8 @@ import { TopbarComponent } from '../topbar/topbar.component';
 import { PedidoService } from '../../../services/pedido.service';
 import type { PedidoCompleto } from '../../../services/pedido.service';
 
+// COMMIT
+
 @Component({
   selector: 'app-order-tracker',
   standalone: true,
@@ -26,6 +28,7 @@ export class OrderTrackerComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     // Primeiro carrega os pedidos, depois se inscreve para receber atualizações
+
     this.pedidoService.loadAllPedidos();
     
     // Escuta o BehaviorSubject com todos os pedidos

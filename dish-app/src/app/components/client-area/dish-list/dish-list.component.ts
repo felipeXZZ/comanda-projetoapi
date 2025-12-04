@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TopbarComponent } from '../topbar/topbar.component';
 
-// NOSSOS SERVIÇOS
+// Serviços
 import { Dish, DishService } from '../../../services/dish.service';
 import { CartService, CartItem } from '../../../services/cart.service';
 
@@ -29,7 +29,7 @@ export class DishListComponent implements OnInit {
   public totalItensNoCarrinho$: Observable<number>;
   public totalPrecoCarrinho$: Observable<number>;
 
-  //Modal
+  // Modal
   public isModalVisible = false;
   public selectedDish: Dish | null = null;
   public modalQuantity = 1;
@@ -39,8 +39,14 @@ export class DishListComponent implements OnInit {
     private cartService: CartService
   ) {
     this.totalPrecoCarrinho$ = this.cartService.total$;
+
     this.totalItensNoCarrinho$ = this.cartService.items$.pipe(
-      map((items: CartItem[]) => items.reduce((total: number, item: CartItem) => total + item.quantidade, 0))
+      map((items: CartItem[]) =>
+        items.reduce(
+          (total: number, item: CartItem) => total + item.quantidade,
+          0
+        )
+      )
     );
   }
 
@@ -51,11 +57,34 @@ export class DishListComponent implements OnInit {
   loadDishes(): void {
     this.isLoading = true;
     this.error = null;
+
+    // ============================
+    // PRATOS FIXOS (IMAGENS ESTÁTICAS) COMMIT FELIPE
+    // ============================
+    const pratosFixos: Dish[] = [
+      {
+        id: 1,
+        name: 'Pizza Artesanal',
+        description: 'Mussarela fresca e manjericão',
+        price: 25,
+        image: 'https://i.ibb.co/LdRZv59x/pizza-artesanal.jpg'
+      },
+      {
+        id: 2,
+        name: 'Burger da Casa',
+        description: 'Hambúrguer artesanal com queijo e molho especial',
+        price: 18,
+        image: 'https://i.ibb.co/hJtB8GT7/burger-casa.jpg'
+      }
+    ];
+
     this.dishService.getDishes().subscribe({
       next: (data) => {
-        this.dishes = data;
+        // Junta pratos fixos + pratos do backend
+        this.dishes = [...pratosFixos, ...data];
+
         this.isLoading = false;
-        console.log('Pratos carregados:', data);
+        console.log('Pratos carregados:', this.dishes);
       },
       error: (err) => {
         console.error('Erro ao buscar pratos:', err);
@@ -65,11 +94,13 @@ export class DishListComponent implements OnInit {
     });
   }
 
- // ----- INÍCIO: MÉTODOS PARA O MODAL -----
+  // ============================
+  // MÉTODOS DO MODAL
+  // ============================
 
   abrirModal(dish: Dish): void {
     this.selectedDish = dish;
-    this.modalQuantity = 1; // Reseta a quantidade para 1
+    this.modalQuantity = 1;
     this.isModalVisible = true;
   }
 
@@ -91,13 +122,13 @@ export class DishListComponent implements OnInit {
   confirmarAdicaoAoCarrinho(): void {
     if (this.selectedDish) {
       console.log('Adicionando', this.modalQuantity, 'x', this.selectedDish.name);
-      
-      // Chama o serviço de carrinho N vezes
+
       for (let i = 0; i < this.modalQuantity; i++) {
         this.cartService.addItem(this.selectedDish);
       }
-      
-      this.cancelarModal(); // Fecha o modal
+
+      this.cancelarModal();
     }
   }
+
 }

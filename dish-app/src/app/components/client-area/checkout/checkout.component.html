@@ -1,5 +1,6 @@
 <app-topbar></app-topbar>
 
+
 <main class="max-w-6xl mx-auto px-4 pt-8 pb-5">
   <section class="text-center mb-8">
     <h1 class="text-3xl text-gray-900">Carrinho</h1>
@@ -8,7 +9,6 @@
 </main>
 
 <ng-container *ngIf="(items$ | async) as items">
-// COMMIT
   <div *ngIf="items.length > 0" class="max-w-6xl mx-auto px-4 pb-24 grid grid-cols-1 md:grid-cols-2 gap-8">
 
     <div class="rounded-2xl border-2 border-gray-300 p-5">
@@ -141,3 +141,5 @@
   </div>
 
 </ng-container>
+
+<!-- ======= COMMIT ======= -->
